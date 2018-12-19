@@ -7,7 +7,6 @@ import math
 import Midi
 from Chord import Chord
 import Utils
-import Swinger
 
 EVENT_SPLIT2_25_75 = 0.25
 EVENT_SPLIT2_33_67 = 0.3333333
@@ -202,9 +201,7 @@ class BaseEvent (object):
     if notes == None or len(notes) == 0:
       return self
     for n in notes:
-      t = Swinger.swing(self.time)
-      #print ("time before swing: %.2f after: %.2f" % (self.time, t))
-      midi.write_note(self.channel, self._final_post_transform_note(n, centers) + self.root, t, self.duration, self.volume)
+      midi.write_note(self.channel, self._final_post_transform_note(n, centers) + self.root, self.time, self.duration, self.volume)
     return self
 
   def add_time(self, time):
@@ -257,7 +254,8 @@ class BaseEvent (object):
 
   @staticmethod
   def _clean_temporal_value(value):
-    value = float(int(value * 4.0 + 0.5)) * 0.25
+    resolution = 4.0
+    value = float(int(value * resolution + 0.5)) / resolution
     if int(value) == int(value + 0.999):
       value = int(value)
     return value

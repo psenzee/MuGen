@@ -11,6 +11,8 @@ from Performance import PERFORMANCE
 from Dynamics import *
 from InstrumentRoles import *
 from Arrangement import Arrangement
+from Arrangement import APPLY_ALL
+from Arrangement import APPLY_NONE
 
 # https://en.wikipedia.org/wiki/General_MIDI
 
@@ -67,8 +69,8 @@ class Midi (object):
   def write_note(self, channel, note, time, duration, volume, time_scale = 0.25):
     perf = self.performance
     track = perf.get_arrangement().get_channel_track(channel)
-    (note1, time1, duration1, volume1) = perf.apply(channel, note, time, duration, volume)
-    (note2, time2, duration2, volume2) = perf.apply_basic(channel, note, time, duration, volume)
+    (note1, time1, duration1, volume1) = perf.apply(channel, note, time, duration, volume, APPLY_ALL)
+    (note2, time2, duration2, volume2) = perf.apply(channel, note, time, duration, volume, APPLY_NONE)
     #print("TRACK " + str(track) + " CHANNEL " + str(channel))
     gm_channel = self.instruments.get_gm_channel(channel)
     if duration1 > 0:

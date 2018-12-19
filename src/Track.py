@@ -33,6 +33,9 @@ class Track (object):
   def set_dynamics(self, channel, period, overall = 1.0, offset = 0, min_max = (0, 127)):
     self.midi.set_dynamics(channel, period, overall, offset, min_max)
     return self
+    
+  def get_arrangement(self):
+    return self.midi.get_arrangement()
 
   def set_base_volume(self, volume):
     self.volume = volume

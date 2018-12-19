@@ -3,6 +3,7 @@
 
 import random
 from Arrangement import Arrangement
+from Arrangement import APPLY_ALL
 from Utils import copy_whole_object
 
 class Performance (object):
@@ -36,7 +37,7 @@ class Performance (object):
     self.time_scale = 0.25
     return self
     
-  def apply(self, channel, note, time, duration, volume):
+  def apply(self, channel, note, time, duration, volume, apply_options = APPLY_ALL):
     if self.dequantize != 0:
       time = time + random.uniform(-self.dequantize * 0.5, self.dequantize * 0.5)
     if self.duration != 0:
@@ -44,29 +45,7 @@ class Performance (object):
     if self.volume != 0:
       volume = volume + random.uniform(-self.volume * 0.5, self.volume * 0.5)
     chs = self.get_arrangement()
-    (note, time, duration, volume) = chs.apply(channel, note, time, duration, volume)
-    if time < 0:
-      time = 0
-    if volume > 127:
-      volume = 127
-    if volume <= 1:
-      volume = int(1)
-    if duration <= 0.2:
-      duration = int(0)
-    if self.resolution != 0:
-      time = int(time * self.resolution) / self.resolution
-      duration = int(duration * self.resolution) / self.resolution
-    return (int(note) % 128, time * self.time_scale, duration * self.time_scale, int(volume))
-    
-  def apply_basic(self, channel, note, time, duration, volume):
-    if self.dequantize != 0:
-      time = time + random.uniform(-self.dequantize * 0.5, self.dequantize * 0.5)
-    if self.duration != 0:
-      duration = duration + random.uniform(-self.duration * 0.75, self.duration * 0.25)
-    if self.volume != 0:
-      volume = volume + random.uniform(-self.volume * 0.5, self.volume * 0.5)
-    chs = self.get_arrangement()
-    (note, time, duration, volume) = chs.apply_basic(channel, note, time, duration, volume)
+    (note, time, duration, volume) = chs.apply(channel, note, time, duration, volume, apply_options)
     if time < 0:
       time = 0
     if volume > 127:

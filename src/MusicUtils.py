@@ -41,10 +41,6 @@ def shift_index(index, direction, chromatic):
         index = index + p + '1'
   return index
 
-def swing(time):
-  t = time + (math.cos(time * PI2 * SWING_FREQ - PI) + 1) * SWING_STRENGTH
-  return t
-
 def octave_str(octave):
   if not octave:
     return ''

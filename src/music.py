@@ -28,6 +28,7 @@ def generate_track(root, chords, generator, times = 4):
   mf = Track(root).open(NO_TRACKS)
   for channel in range(0, NO_TRACKS):
     mf.set_dynamics(channel, random.choice([4, 6, 8, 16, 32, 64, 128, 256, 512]), 1.0, random.uniform(0, 1))
+    mf.get_arrangement().set_channel_swing(channel, 0.25)
   mf.set_base_chords(chords)
   mf.generate(generator, chords * times)
   mf.save()
